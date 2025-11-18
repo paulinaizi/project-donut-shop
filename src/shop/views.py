@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import Donut
 
 def home(request):
-    return render(request, 'home.html', {})
+    donuts = Donut.objects.filter(is_custom_base=False)
+    return render(request, 'home.html', {'donuts':donuts})
