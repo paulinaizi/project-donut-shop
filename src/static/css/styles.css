@@ -3667,6 +3667,15 @@ textarea.form-control-lg {
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
+
+.nav-right{
+  color: #000;
+}
+.nav-icon{
+  vertical-align: text-bottom;
+  height: 30px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nav-link {
     transition: none;
