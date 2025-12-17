@@ -52,6 +52,7 @@ class Donut(models.Model):
     is_custom_base = models.BooleanField(default=False)
     coating = models.ForeignKey('Coating', null=True, blank=True, on_delete=models.CASCADE)
     sprinkle = models.ForeignKey('Sprinkle', null=True, blank=True, on_delete=models.CASCADE)
+    top_coating = models.ForeignKey('TopCoating', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
