@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
 <!-- Header-->
 <header class="py-5">
@@ -31,10 +30,14 @@
                     </div>
                     <!-- Creator actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Stwórz donuta</a></div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-dark mt-auto" data-bs-toggle="modal" data-bs-target="#donutCreatorModal">
+                            Stwórz donuta
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>                    
+            </div>
             {% for donut in donuts %}
             <div class="col mb-5">
                 <div class="card h-100">
@@ -61,4 +64,8 @@
         </div>
     </div>
 </section>
+{% include 'creator_modal.html' %}
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/donut-creator.js' %}"></script>
 {% endblock %}

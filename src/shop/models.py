@@ -82,3 +82,15 @@ class Coating(models.Model):
     class Meta:
         verbose_name = 'Polewa'
         verbose_name_plural = 'Polewy'
+
+class TopCoating(models.Model):
+    name = models.CharField(max_length=50)
+    price = models.DecimalField(default=0.00, max_digits=4, decimal_places=2)
+    image = models.ImageField(upload_to='uploads/top_coatings/') 
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Dodatkowa Polewa'
+        verbose_name_plural = 'Dodatkowe Polewy'

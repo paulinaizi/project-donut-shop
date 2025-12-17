@@ -1,0 +1,73 @@
+{% load static %}
+
+<div
+    class="modal fade"
+    id="donutCreatorModal"
+    tabindex="-1"
+    role="dialog"
+    data-bs-backdrop="static"
+    aria-labelledby="donutCreatorModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-4">Kreator Donuta</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 mb-4 col-md-6 d-flex justify-content-center align-items-center">
+                        <img src="{% static 'assets/creator_placeholder.jpg' %}" alt="" class="img-fluid" />
+                    </div>
+                    <div class="col-12 col-md-6 creator-sections">
+                        <div class="mb-4 text-end">
+                            <button type="button" class="btn btn-surprise" data-bs-toggle="tooltip" title="Wylosuj losowy zestaw dodatków">
+                                <img src="{% static 'assets/random_icon.png' %}" alt="" />
+                                <span>Zaskocz mnie</span>
+                            </button>
+                        </div>
+                        <div class="mb-4 section-block">
+                            <h6>Polewa</h6>
+                            <div class="options-grid">
+                                {% for coating in coatings %}
+                                <div class="option-tile" data-type="coating" data-id="{{ coating.id }}">
+                                    <img src="{{ coating.image.url }}" alt="{{ coating.name }}" />
+                                    <span>{{ coating.name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="mb-4 section-block">
+                            <h6>Posypka</h6>
+                            <div class="options-grid">
+                                {% for sprinkle in sprinkles %}
+                                <div class="option-tile" data-type="sprinkle" data-id="{{ sprinkle.id }}">
+                                    <img src="{{ sprinkle.image.url }}" alt="{{ sprinkle.name }}" />
+                                    <span>{{ sprinkle.name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="mb-4 section-block">
+                            <h6>Dodatkowa Polewa</h6>
+                            <div class="options-grid">
+                              {% for top_coating in top_coatings %}
+                                <div class="option-tile" data-type="topCoating" data-id="{{ top_coating.id }}">
+                                    <img src="{{ top_coating.image.url }}" alt="{{ top_coating.name }}" />
+                                    <span>{{ top_coating.name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark">Dodaj do koszyka</button>
+            </div>
+        </div>
+    </div>
+</div>
