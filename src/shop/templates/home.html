@@ -18,7 +18,7 @@
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Creator image-->
-                    <img class="card-img-top" src="{% static 'assets/creator.gif' %}" alt="..." />
+                    <img class="card-img-top" src="{% static 'assets/creator.gif' %}" alt="..."/>
                     <!-- Creator details-->
                     <div class="card-body p-4">
                         <div class="text-center">
@@ -31,7 +31,8 @@
                     <!-- Creator actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
-                            <button type="button" class="btn btn-outline-dark mt-auto" data-bs-toggle="modal" data-bs-target="#donutCreatorModal">
+                            <button type="button" class="btn btn-outline-dark mt-auto" data-bs-toggle="modal"
+                                data-bs-target="#donutCreatorModal">
                             Stwórz donuta
                             </button>
                         </div>
@@ -42,7 +43,7 @@
             <div class="col mb-5">
                 <div class="card h-100">
                     <!-- Product image-->
-                    <img class="card-img-top" src="{{ donut.image.url }}" alt="..." />
+                    <img class="card-img-top" src="{{ donut.image.url }}" alt="..."/>
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
@@ -56,7 +57,12 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-outline-dark mt-auto add-to-cart"
+                                data-donut-id="{{ donut.id }}">
+                            Dodaj do koszyka
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -68,4 +74,5 @@
 {% endblock %}
 {% block extra_js %}
 <script src="{% static 'js/donut-creator.js' %}"></script>
+<script type="module" src="{% static 'js/cart.js' %}"></script>
 {% endblock %}

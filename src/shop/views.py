@@ -4,11 +4,12 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import LoginForm, RegisterForm
 
 def home(request):
+    base_donut = Donut.objects.get(is_custom_base=True)
     donuts = Donut.objects.filter(is_custom_base=False)
     coatings = Coating.objects.all()
     sprinkles = Sprinkle.objects.all()
     top_coatings = TopCoating.objects.all()
-    return render(request, 'home.html', {'donuts':donuts, 'coatings':coatings, 'sprinkles':sprinkles, 'top_coatings':top_coatings})
+    return render(request, 'home.html', {'base_donut':base_donut, 'donuts':donuts, 'coatings':coatings, 'sprinkles':sprinkles, 'top_coatings':top_coatings})
 
 def about(request):
     return render(request, 'about.html', {})

@@ -8,7 +8,7 @@
     data-bs-backdrop="static"
     aria-labelledby="donutCreatorModalLabel"
     aria-hidden="true"
->
+    >
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,13 +18,14 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12 mb-4 col-md-6 d-flex justify-content-center align-items-center">
-                        <img src="{% static 'assets/creator_placeholder.jpg' %}" alt="" class="img-fluid" />
+                        <img src="{% static 'assets/creator_placeholder.jpg' %}" alt="" class="img-fluid"/>
                     </div>
                     <div class="col-12 col-md-6 creator-sections">
                         <div class="mb-4 text-end">
-                            <button type="button" class="btn btn-surprise" data-bs-toggle="tooltip" title="Wylosuj losowy zestaw dodatków">
-                                <img src="{% static 'assets/random_icon.png' %}" alt="" />
-                                <span>Zaskocz mnie</span>
+                            <button type="button" class="btn btn-surprise" data-bs-toggle="tooltip"
+                                title="Wylosuj losowy zestaw dodatków">
+                            <img src="{% static 'assets/random_icon.png' %}" alt=""/>
+                            <span>Zaskocz mnie</span>
                             </button>
                         </div>
                         <div class="mb-4 section-block">
@@ -32,31 +33,31 @@
                             <div class="options-grid">
                                 {% for coating in coatings %}
                                 <div class="option-tile" data-type="coating" data-id="{{ coating.id }}">
-                                    <img src="{{ coating.image.url }}" alt="{{ coating.name }}" />
+                                    <img src="{{ coating.image.url }}" alt="{{ coating.name }}"/>
                                     <span>{{ coating.name }}</span>
                                 </div>
                                 {% endfor %}
                             </div>
                         </div>
-                        <hr />
+                        <hr/>
                         <div class="mb-4 section-block">
                             <h6>Posypka</h6>
                             <div class="options-grid">
                                 {% for sprinkle in sprinkles %}
                                 <div class="option-tile" data-type="sprinkle" data-id="{{ sprinkle.id }}">
-                                    <img src="{{ sprinkle.image.url }}" alt="{{ sprinkle.name }}" />
+                                    <img src="{{ sprinkle.image.url }}" alt="{{ sprinkle.name }}"/>
                                     <span>{{ sprinkle.name }}</span>
                                 </div>
                                 {% endfor %}
                             </div>
                         </div>
-                        <hr />
+                        <hr/>
                         <div class="mb-4 section-block">
                             <h6>Dodatkowa Polewa</h6>
                             <div class="options-grid">
-                              {% for top_coating in top_coatings %}
+                                {% for top_coating in top_coatings %}
                                 <div class="option-tile" data-type="topCoating" data-id="{{ top_coating.id }}">
-                                    <img src="{{ top_coating.image.url }}" alt="{{ top_coating.name }}" />
+                                    <img src="{{ top_coating.image.url }}" alt="{{ top_coating.name }}"/>
                                     <span>{{ top_coating.name }}</span>
                                 </div>
                                 {% endfor %}
@@ -66,7 +67,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-dark">Dodaj do koszyka</button>
+                <button type="button" class="btn btn-dark add-to-cart" data-donut-id="{{ base_donut.id }}"
+                    data-source="creator">Dodaj do koszyka
+                </button>
             </div>
         </div>
     </div>

@@ -1,55 +1,61 @@
 {% load static %}
-
 <!-- Navigation-->
 <nav class="navbar navbar-expand-xl navbar-light bg-light">
     <div class="container px-4 px-xl-5">
         <a class="navbar-brand" href="{% url 'home' %}">
-            <img src="{% static 'assets/pixel_donuts_logo.png' %}" alt="Pixel Donuts Logo">
+        <img src="{% static 'assets/pixel_donuts_logo.png' %}" alt="Pixel Donuts Logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto mb-2 mb-xl-0 ms-xl-4">
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">
-                        Oferta
-                    </a>
+                    Oferta </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'about' %}">
-                    O projekcie
-                    </a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                        href="{% url 'about' %}"> O projekcie </a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-xl-0">
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link nav-right dropdown-toggle" href="#" id="accountDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                       <img src="{% static 'assets/account.png' %}" class="nav-icon me-1" alt="Konto" height=32 style="vertical-align: text-bottom;">
-                       {{ user.first_name }}
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="{% static 'assets/account.png' %}" class="nav-icon me-1" alt="Konto" height=32
+                        style="vertical-align: text-bottom;">
+                    {{ user.first_name }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-                        <li><a class="dropdown-item" href="#">Profil</a></li>
-                        <li><a class="dropdown-item" href="#">Zamówienia</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Wyloguj się</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#">Profil</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#">Zamówienia</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Wyloguj się</a>
+                        </li>
                     </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link nav-right" href="{% url 'login' %}">
-                        <img src="{% static 'assets/account.png' %}" class="nav-icon me-1" alt="Konto">
-                        Zaloguj się
-                    </a>
+                    <img src="{% static 'assets/account.png' %}" class="nav-icon" alt="Konto"> Zaloguj się </a>
                 </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link nav-right" href="#">
-                        <img src="{% static 'assets/cart.png' %}" class="nav-icon me-1" alt="Koszyk">
+                    <a class="nav-link nav-right" href="{% url 'cart_summary' %}">
+                        <div class="cart-wrapper d-inline-block">
+                            <img src="{% static 'assets/cart.png' %}" class="nav-icon" alt="Koszyk"> 
+                            {% if cart_quantity > 0 %} <span class="cart-count">{{ cart_quantity }}</span> {% endif %}
+                        </div>
                         Koszyk
                     </a>
                 </li>

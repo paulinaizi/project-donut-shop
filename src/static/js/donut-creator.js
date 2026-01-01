@@ -17,6 +17,28 @@ function initDonutCreator() {
         topCoating: null
     };
 
+    function isDonutEmpty() {
+        return (
+            donutSelection.coating === null &&
+            donutSelection.sprinkle === null &&
+            donutSelection.topCoating === null
+        );
+    }
+
+    const addToCartButton = modal.querySelector(".add-to-cart");
+
+    function syncCartButton() {
+        addToCartButton.dataset.toppings = JSON.stringify(donutSelection);
+
+        if (isDonutEmpty()) {
+            addToCartButton.disabled = true;
+            addToCartButton.classList.add("disabled");
+        } else {
+            addToCartButton.disabled = false;
+            addToCartButton.classList.remove("disabled");
+        }
+    }
+
     const tiles = modal.querySelectorAll(".option-tile");
 
     tiles.forEach(tile => {
@@ -24,29 +46,21 @@ function initDonutCreator() {
     });
 
     function handleTileClick(tile) {
-        const type = tile.dataset.type;
-        const id = tile.dataset.id;
+        const {
+            type,
+            id
+        } = tile.dataset;
 
-        const isSelected =
-            (type === "coating" && donutSelection.coating === id) ||
-            (type === "sprinkle" && donutSelection.sprinkle === id) ||
-            (type === "topCoating" && donutSelection.topCoating === id);
+        const isSelected = donutSelection[type] === id;
 
         if (isSelected) {
+            donutSelection[type] = null;
+
             if (type === "coating") {
-                donutSelection.coating = null;
-
                 donutSelection.sprinkle = null;
             }
 
-            if (type === "sprinkle") {
-                donutSelection.sprinkle = null;
-            }
-
-            if (type === "topCoating") {
-                donutSelection.topCoating = null;
-            }
-
+            syncCartButton();
             updateUI();
             return;
         }
@@ -67,32 +81,28 @@ function initDonutCreator() {
             donutSelection.topCoating = id;
         }
 
+        syncCartButton();
         updateUI();
     }
 
     function randomizeDonut() {
 
-        const coatings = modal.querySelectorAll('.option-tile[data-type="coating"]');
-        const sprinkles = modal.querySelectorAll('.option-tile[data-type="sprinkle"]');
-        const topCoatings = modal.querySelectorAll('.option-tile[data-type="topCoating"]');
+        const types = ["coating", "sprinkle", "topCoating"];
 
-        function pickRandom(tiles) {
-            if (!tiles.length) return null;
-            const index = Math.floor(Math.random() * tiles.length);
-            return tiles[index].dataset.id;
-        }
+        types.forEach(type => {
+            const tiles = modal.querySelectorAll(`.option-tile[data-type="${type}"]`)
+            donutSelection[type] = pickRandomId(tiles);
+        });
 
-        donutSelection.coating = null;
-        donutSelection.sprinkle = null;
-        donutSelection.topCoating = null;
-
-        donutSelection.coating = pickRandom(coatings);
-
-        donutSelection.sprinkle = pickRandom(sprinkles);
-
-        donutSelection.topCoating = pickRandom(topCoatings);
-
+        syncCartButton();
         updateUI();
+
+    }
+
+    function pickRandomId(tiles){
+        if (!tiles.length) return null;
+        const index = Math.floor(Math.random() * tiles.length);
+        return tiles[index].dataset.id;
     }
 
     const randomizeBtn = modal.querySelector(".btn-surprise");
@@ -105,6 +115,7 @@ function initDonutCreator() {
         donutSelection.sprinkle = null;
         donutSelection.topCoating = null;
 
+        syncCartButton();
         updateUI();
     }
 
@@ -114,18 +125,14 @@ function initDonutCreator() {
 
     function updateUI() {
         tiles.forEach(tile => {
-            const type = tile.dataset.type;
-            const id = tile.dataset.id;
+            const { 
+                type, 
+                id 
+            } = tile.dataset;
 
             tile.classList.remove("selected");
 
-            if (type === "coating" && donutSelection.coating === id) {
-                tile.classList.add("selected");
-            }
-            if (type === "sprinkle" && donutSelection.sprinkle === id) {
-                tile.classList.add("selected");
-            }
-            if (type === "topCoating" && donutSelection.topCoating === id) {
+            if (donutSelection[type] === id) {
                 tile.classList.add("selected");
             }
         });
@@ -139,5 +146,6 @@ function initDonutCreator() {
         });
     }
 
+    syncCartButton();
     updateUI();
 };
