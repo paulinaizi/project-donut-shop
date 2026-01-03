@@ -1,13 +1,14 @@
-from django.shortcuts import render
-from .cart import Cart
-from shop.models import Donut, Coating, Sprinkle, TopCoating
-from django.http import JsonResponse
 import json
+from django.shortcuts import redirect, render
+from django.http import JsonResponse
+from .models import OrderItem
+from .cart import Cart
+from .forms import OrderForm
 
 
 def cart_summary(request):
     cart = Cart(request)
-    return render(request, 'cart_summary.html', {'cart': cart})
+    return render(request, 'cart_summary.html', {'total_price': cart.get_total_price()})
 
 
 def cart_add(request):
@@ -65,3 +66,65 @@ def cart_update(request):
             'status': 'ok',
             'cart_quantity': len(cart)
         })
+
+
+def checkout(request):
+    cart = Cart(request)
+    
+    if len(cart) == 0:
+        return redirect('cart_summary')
+    
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+
+        if form.is_valid():
+            order = form.save(commit=False)
+
+            if request.user.is_authenticated:
+                order.user = request.user
+
+            order.total_price = cart.get_total_price()
+
+            order.save()
+
+            for item in cart:
+                toppings_data = {}
+
+                if 'coating' in item['toppings']:
+                    toppings_data['coating'] = {
+                        'name': item['toppings']['coating'].name,
+                        'price': str(item['toppings']['coating'].price),
+                    }
+
+                if 'sprinkle' in item['toppings']:
+                    toppings_data['sprinkle'] = {
+                        'name': item['toppings']['sprinkle'].name,
+                        'price': str(item['toppings']['sprinkle'].price),
+                    }
+
+                if 'topCoating' in item['toppings']:
+                    toppings_data['topCoating'] = {
+                        'name': item['toppings']['topCoating'].name,
+                        'price': str(item['toppings']['topCoating'].price),
+                    }
+
+                OrderItem.objects.create(
+                    order=order,
+                    donut_name=item['donut'].name,
+                    toppings=toppings_data or None,
+                    qty=item['qty'],
+                    unit_price=item['unit_price'],
+                    total_price=item['total_price'],
+                )
+
+            cart.clear()
+
+            return redirect('order_success', order_id=order.id)
+    else:
+        form = OrderForm()
+
+    return render(request, 'checkout.html', {'form': form, 'total_price': cart.get_total_price()})
+
+
+def order_success(request, order_id):
+    return render(request, 'order_success.html', {'order_id': order_id})

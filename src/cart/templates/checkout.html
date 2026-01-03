@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <div class="col-12 col-md-8 col-lg-6 mx-auto">
+        <a href="{% url 'cart_summary' %}" class="text-decoration-none d-inline-block mb-3">
+        <i class="bi bi-arrow-left"></i> Wróć do koszyka
+        </a>
+        <h2 class="fw-bold mb-3 text-center">Złóż zamówienie</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="checkout-summary mt-4">
+                <h5 class="fw-bold">Podsumowanie ({{ cart_quantity }})</h5>
+                <ul>
+                    {% for item in cart %}
+                    <li>
+                        {{ item.donut.name }} x {{ item.qty }} - {{ item.total_price }} zł
+                        {% if item.is_custom %}
+                            {% if item.toppings.coating %}
+                            <div class="checkout-topping">Polewa: {{ item.toppings.coating.name }}</div>
+                            {% endif %}
+                            {% if item.toppings.sprinkle %}
+                            <div class="checkout-topping">Posypka: {{ item.toppings.sprinkle.name }}</div>
+                            {% endif %}
+                            {% if item.toppings.topCoating %}
+                            <div class="checkout-topping">Dodatkowa polewa: {{ item.toppings.topCoating.name }}</div>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                <h5 class="fw-bold">Suma: {{ total_price }}</h5>
+            </div>
+            <div class="checkout-payment mt-4">
+                <h5 class="fw-bold">Metoda płatności</h5>
+                <div class="payment-options">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" disabled>
+                        <label class="form-check-label text-muted">
+                        Płatność online
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" disabled>
+                        <label class="form-check-label text-muted">
+                        Płatność przy odbiorze
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type=button class="confirm-order btn btn-dark w-100 mt-4">
+            Złóż zamówienie
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script> 
+    document.querySelector('.confirm-order').addEventListener('click', function () { 
+        if (confirm("Czy na pewno chcesz złożyć zamówienie?")) { 
+            this.closest('form').submit();
+        } 
+    }); 
+</script>
+{% endblock %}

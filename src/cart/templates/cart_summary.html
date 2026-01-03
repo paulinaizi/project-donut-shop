@@ -3,48 +3,58 @@
 {% block content %}
 <div class="container my-5">
     {% if cart %}
-    <h2 class="fw-bolder mb-3">Twój koszyk</h2>
-    {% for item in cart %}
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">
-                {{ item.donut.name }}
-                {% if item.is_custom %}
-                <span class="badge text-dark badge-creator">Kreator</span>
-                {% endif %}
-            </h5>
-            {% if item.is_custom %}
-            <ul class="list-unstyled mb-2">
-                {% if item.toppings.coating %}
-                <li><b>Polewa:</b> {{ item.toppings.coating.name }}</li>
-                {% endif %}
-                {% if item.toppings.sprinkle %}
-                <li><b>Posypka:</b> {{ item.toppings.sprinkle.name }}</li>
-                {% endif %}
-                {% if item.toppings.topCoating %}
-                <li><b>Dodatkowa polewa:</b> {{ item.toppings.topCoating.name }}</li>
-                {% endif %}
-            </ul>
-            {% endif %}
-            <div class="qty-controls my-3">
-                <button class="qty-btn minus btn btn-outline-secondary btn-sm" data-key="{{ item.key }}">-</button>
-                
-                <span class="qty-value">{{ item.qty }}</span>
-
-                <button class="qty-btn plus btn btn-outline-secondary btn-sm" data-key="{{ item.key }}">+</button>
-
-                <button class="remove-item btn btn-outline-danger btn-sm"
-                        data-key="{{ item.key }}"
-                        title="Usuń z koszyka">
-                    <i class="bi bi-trash-fill"></i>
-                </button>
+    <h2 class="fw-bold mb-3">Twój koszyk ({{ cart_quantity }})</h2>
+    <div class="row">
+        <div class="col-md-8">
+            {% for item in cart %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ item.donut.name }}
+                        {% if item.is_custom %}
+                        <span class="badge text-dark badge-creator">Kreator</span>
+                        {% endif %}
+                    </h5>
+                    {% if item.is_custom %}
+                    <ul class="list-unstyled mb-2">
+                        {% if item.toppings.coating %}
+                        <li><b>Polewa:</b> {{ item.toppings.coating.name }}</li>
+                        {% endif %}
+                        {% if item.toppings.sprinkle %}
+                        <li><b>Posypka:</b> {{ item.toppings.sprinkle.name }}</li>
+                        {% endif %}
+                        {% if item.toppings.topCoating %}
+                        <li><b>Dodatkowa polewa:</b> {{ item.toppings.topCoating.name }}</li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                    <div class="qty-controls my-3">
+                        <button class="qty-btn minus btn btn-outline-secondary btn-sm" data-key="{{ item.key }}">-</button>
+                        <span class="qty-value">{{ item.qty }}</span>
+                        <button class="qty-btn plus btn btn-outline-secondary btn-sm" data-key="{{ item.key }}">+</button>
+                        <button class="remove-item btn btn-outline-danger btn-sm"
+                            data-key="{{ item.key }}"
+                            title="Usuń z koszyka">
+                        <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </div>
+                    <p><strong>Cena: {{ item.total_price }} zł</strong></p>
+                </div>
             </div>
-            <p><strong>Cena: {{ item.total_price }} zł</strong></p>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5 class="fw-bold">Podsumowanie</h5>
+                <p><strong>Suma: {{ total_price }} zł</strong></p>
+                <a href="{% url 'checkout' %}" class="btn btn-dark w-100">
+                Przejdź do zamówienia
+                </a>
+            </div>
         </div>
     </div>
-    {% endfor %}
     {% else %}
-    <h2 class="fw-bolder">Twój koszyk jest pusty!</h2>
+    <h2 class="fw-bold">Twój koszyk jest pusty!</h2>
     {% endif %}
 </div>
 {% endblock %}

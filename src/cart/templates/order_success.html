@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <div class="col-12 col-md-8 col-lg-6 mx-auto text-center">
+        <div class="success-message p-4 mt-4">
+            <h3 class="fw-bold mb-3">Zamówienie zostało złożone pomyślnie!</h3>
+            <div class="text-muted">Twoje zamówienie zostało przyjęte do realizacji.</div>
+            <div class="text-muted">Wkrótce otrzymasz potwierdzenie e-mail.</div>
+            <div class="text-muted small mt-2">Numer zamówienia #{{ order_id }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

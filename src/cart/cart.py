@@ -50,6 +50,9 @@ class Cart:
                 price += topping.price
         return price
 
+    def get_total_price(self):
+        return sum(item['total_price'] for item in self)
+
     def __iter__(self):
         for key, item in self.cart.items():
             donut = Donut.objects.get(id=item['donut_id'])
