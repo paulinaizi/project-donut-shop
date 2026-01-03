@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 
+
 class CustomUserManager(UserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
@@ -27,6 +28,10 @@ class CustomUserManager(UserManager):
     def normalize_email(self, email):
         email = super().normalize_email(email)
         return email.lower() if email else email
+    
+    def __str__(self):
+        return self.email
+
 
 class CustomUser(AbstractUser):
     username = None
@@ -44,15 +49,16 @@ class CustomUser(AbstractUser):
         verbose_name = "Użytkownik"
         verbose_name_plural = "Użytkownicy"
     
+
 class Donut(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-    price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2)
-    image = models.ImageField(upload_to='uploads/donuts/')
-    is_custom_base = models.BooleanField(default=False)
-    coating = models.ForeignKey('Coating', null=True, blank=True, on_delete=models.CASCADE)
-    sprinkle = models.ForeignKey('Sprinkle', null=True, blank=True, on_delete=models.CASCADE)
-    top_coating = models.ForeignKey('TopCoating', null=True, blank=True, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, verbose_name='nazwa')
+    description = models.TextField(blank=True, verbose_name='opis')
+    price = models.DecimalField(default=0.00, max_digits=6, decimal_places=2, verbose_name='cena')
+    image = models.ImageField(upload_to='uploads/donuts/', verbose_name='obraz')
+    is_custom_base = models.BooleanField(default=False, verbose_name='baza do kreatora')
+    coating = models.ForeignKey('Coating', null=True, blank=True, on_delete=models.CASCADE, verbose_name='polewa')
+    sprinkle = models.ForeignKey('Sprinkle', null=True, blank=True, on_delete=models.CASCADE, verbose_name='posypka')
+    top_coating = models.ForeignKey('TopCoating', null=True, blank=True, on_delete=models.CASCADE, verbose_name='dodatkowa polewa')
 
     def __str__(self):
         return self.name
@@ -60,10 +66,11 @@ class Donut(models.Model):
     class Meta:
         verbose_name_plural = 'Donuty'
 
+
 class Sprinkle(models.Model):
-    name = models.CharField(max_length=50)
-    price = models.DecimalField(default=0.00, max_digits=4, decimal_places=2)
-    image = models.ImageField(upload_to='uploads/sprinkles/')
+    name = models.CharField(max_length=50, verbose_name='nazwa')
+    price = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='cena')
+    image = models.ImageField(upload_to='uploads/sprinkles/', verbose_name='obraz')
     
     def __str__(self):
         return self.name
@@ -72,10 +79,11 @@ class Sprinkle(models.Model):
         verbose_name = 'Posypka'
         verbose_name_plural = 'Posypki'
 
+
 class Coating(models.Model):
-    name = models.CharField(max_length=50)
-    price = models.DecimalField(default=0.00, max_digits=4, decimal_places=2)
-    image = models.ImageField(upload_to='uploads/coatings/')
+    name = models.CharField(max_length=50, verbose_name='nazwa')
+    price = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='cena')
+    image = models.ImageField(upload_to='uploads/coatings/', verbose_name='obraz')
 
     def __str__(self):
         return self.name
@@ -84,10 +92,11 @@ class Coating(models.Model):
         verbose_name = 'Polewa'
         verbose_name_plural = 'Polewy'
 
+
 class TopCoating(models.Model):
-    name = models.CharField(max_length=50)
-    price = models.DecimalField(default=0.00, max_digits=4, decimal_places=2)
-    image = models.ImageField(upload_to='uploads/top_coatings/') 
+    name = models.CharField(max_length=50, verbose_name='nazwa')
+    price = models.DecimalField(default=0.00, max_digits=4, decimal_places=2, verbose_name='cena')
+    image = models.ImageField(upload_to='uploads/top_coatings/', verbose_name='obraz') 
 
     def __str__(self):
         return self.name
