@@ -1,40 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-<!-- Header-->
-<header class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-black">
-            <h1 class="display-6 fw-bolder">Zaloguj się</h1>
-            <p class="lead fw-normal text-black mb-0">Zaloguj się do swojego konta</p>
-        </div>
-    </div>
-</header>
-<!-- Section-->
 <section class="py-5">
     <div class="container my-3 pb-5">
-        <div class="row justify-content-center">
-            <div class="col-10 col-md-8 col-lg-6">
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {{ form.non_field_errors }}
-                    </div>
-                {% endif %}
-                <div class="d-grid text-center mb-4"> 
-                    <h2>Wprowadź swoje dane</h2>
-                </div>
-                <!-- Login Form -->
-                <form method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="d-grid gap-3">
-                        <a href="">Zresetuj hasło</a>
-                        <button type="submit" class="btn btn-purple">Zaloguj się</button>
-                        <a href="{% url 'register' %}" class="btn btn-dark">Nie masz konta? Zarejestruj się</a>
-                    </div>
-                </form>
+        <div class="card p-5 mx-auto auth-card">
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
             </div>
+            {% endif %}
+            <h2 class="fw-bold text-center mb-4">Zaloguj się</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-grid gap-3">
+                    <a href="">Zresetuj hasło</a>
+                    <button type="submit" class="btn btn-purple">Zaloguj się</button>
+                    <a href="{% url 'register' %}" class="btn btn-dark">Nie masz konta? Zarejestruj się</a>
+                </div>
+            </form>
         </div>
     </div>
 </section>

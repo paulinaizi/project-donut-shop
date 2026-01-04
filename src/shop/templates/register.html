@@ -1,39 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block content %}
-<!-- Header-->
-<header class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-black">
-            <h1 class="display-6 fw-bolder">Zarejestruj się</h1>
-            <p class="lead fw-normal text-black mb-0">Utworz nowe konto</p>
-        </div>
-    </div>
-</header>
-<!-- Section-->
 <section class="py-5">
     <div class="container my-3 pb-5">
-        <div class="row justify-content-center">
-            <div class="col-10 col-md-8 col-lg-6">
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        {{ form.non_field_errors }}
-                    </div>
-                {% endif %}
-                <div class="d-grid text-center mb-4"> 
-                    <h2>Wprowadź swoje dane</h2>
-                </div>
-                <!-- Register Form -->
-                <form method="POST" action="{% url 'register' %}">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <div class="d-grid gap-3">
-                        <button type="submit" class="btn btn-purple">Zarejestruj się</button>
-                        <a href="{% url 'login' %}" class="btn btn-dark">Masz konto? Zaloguj się</a>
-                    </div>
-                </form>
+        <div class="card p-5 mx-auto auth-card">
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
             </div>
+            {% endif %}
+            <h2 class="fw-bold text-center mb-4">Zarejestruj się</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-grid gap-3">
+                    <button type="submit" class="btn btn-purple">Zarejestruj się</button>
+                    <a href="{% url 'login' %}" class="btn btn-dark">Masz konto? Zaloguj się</a>
+                </div>
+            </form>
         </div>
     </div>
 </section>

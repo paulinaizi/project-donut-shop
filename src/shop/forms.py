@@ -7,7 +7,7 @@ class LoginForm(forms.Form):
         label='Email',
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz email',
+            'placeholder': 'Email',
         }),
         error_messages={
             'required': 'Email nie może być pusty.'
@@ -17,7 +17,7 @@ class LoginForm(forms.Form):
         label='Hasło',
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz hasło',
+            'placeholder': 'Hasło',
         }),
         error_messages={
             'required': 'Hasło nie może być puste.',
@@ -30,7 +30,7 @@ class RegisterForm(UserCreationForm):
         max_length=100,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz imię',
+            'placeholder': 'Imię',
         }),
     )
     last_name = forms.CharField(
@@ -38,7 +38,7 @@ class RegisterForm(UserCreationForm):
         max_length=100,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Wpisz nazwisko',
+            'placeholder': 'Nazwisko',
         }),
     )
 
@@ -50,13 +50,14 @@ class RegisterForm(UserCreationForm):
         super(RegisterForm, self).__init__(*args, **kwargs)
 
         self.fields['email'].widget.attrs['class'] = 'form-control'
-        self.fields['email'].widget.attrs['placeholder'] = 'Wpisz email'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email'
         self.fields['email'].label = 'Email'
+        self.fields['email'].widget.attrs['autofocus'] = False
 
         self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Wpisz hasło'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Hasło'
         self.fields['password1'].label = 'Hasło'
-        self.fields['password1'].help_text = '<ul class="form-text text-muted small"><li>Twoje hasło musi zawierać co najmniej 8 znaków.</li><li>Hasło nie może składać się wyłącznie z cyfr.</li></ul>'
+        self.fields['password1'].help_text = '<ul class="form-text text-muted small"><li>Hasło musi zawierać co najmniej 8 znaków.</li><li>Hasło nie może składać się wyłącznie z cyfr.</li></ul>'
 
         self.fields['password2'].widget.attrs['class'] = 'form-control'
         self.fields['password2'].widget.attrs['placeholder'] = 'Potwierdź hasło'
