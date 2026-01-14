@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Donut, Coating, Sprinkle, TopCoating
 from django.contrib.auth import login, logout, authenticate
+from .models import Donut, Coating, Sprinkle, TopCoating
 from .forms import LoginForm, RegisterForm
+
 
 def home(request):
     base_donut = Donut.objects.get(is_custom_base=True)
@@ -11,8 +12,10 @@ def home(request):
     top_coatings = TopCoating.objects.all()
     return render(request, 'home.html', {'base_donut':base_donut, 'donuts':donuts, 'coatings':coatings, 'sprinkles':sprinkles, 'top_coatings':top_coatings})
 
+
 def about(request):
     return render(request, 'about.html', {})
+
 
 def login_user(request):
     if request.method == "POST":
@@ -24,7 +27,7 @@ def login_user(request):
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect(request.GET.get('next', 'home'))
             else:
                 form.add_error(None, "Niepoprawne dane logowania.")
     else:
@@ -32,9 +35,11 @@ def login_user(request):
 
     return render(request, 'login.html', {'form': form})
 
+
 def logout_user(request):
     logout(request)
     return redirect('home')
+
 
 def register_user(request):
     if request.method == "POST":

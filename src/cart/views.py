@@ -84,7 +84,6 @@ def checkout(request):
                 order.user = request.user
 
             order.total_price = cart.get_total_price()
-
             order.save()
 
             for item in cart:
@@ -118,12 +117,26 @@ def checkout(request):
                 )
 
             cart.clear()
-
             return redirect('order_success', order_id=order.id)
-    else:
-        form = OrderForm()
 
-    return render(request, 'checkout.html', {'form': form, 'total_price': cart.get_total_price()})
+    else:
+        if request.user.is_authenticated:
+            form = OrderForm(initial={
+                'first_name': request.user.first_name,
+                'last_name': request.user.last_name,
+                'email': request.user.email,
+            })
+        else:
+            form = OrderForm()
+
+    return render(
+        request,
+        'checkout.html',
+        {
+            'form': form,
+            'total_price': cart.get_total_price(),
+        }
+    )
 
 
 def order_success(request, order_id):
