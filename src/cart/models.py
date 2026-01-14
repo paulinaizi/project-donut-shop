@@ -6,7 +6,8 @@ class Order(models.Model):
     class Status(models.IntegerChoices):
         NEW = 1, 'Nowe'
         IN_PROGRESS = 2, 'W realizacji'
-        DONE = 3, 'Zrealizowane'
+        COMPLETED = 3, 'Zrealizowane'
+        CANCELLED = 4, 'Anulowane'
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True,
                              related_name='orders', verbose_name='użytkownik')
