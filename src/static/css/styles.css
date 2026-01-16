@@ -4406,6 +4406,10 @@ textarea.form-control-lg {
   color: var(--bs-card-color);
 }
 
+.card-body .price { 
+  margin-top: auto; 
+}
+
 .card-title {
   margin-bottom: var(--bs-card-title-spacer-y);
 }
