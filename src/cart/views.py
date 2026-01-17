@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timezone
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from .models import OrderItem
@@ -84,6 +85,7 @@ def checkout(request):
                 order.user = request.user
 
             order.total_price = cart.get_total_price()
+            order.created_at = datetime.now(timezone.utc)
             order.save()
 
             for item in cart:

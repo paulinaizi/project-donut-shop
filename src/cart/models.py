@@ -18,7 +18,7 @@ class Order(models.Model):
     street_address = models.CharField(max_length=100, verbose_name='ulica') 
     postal_code = models.CharField(max_length=6, verbose_name='kod pocztowy')
     city = models.CharField(max_length=100, verbose_name='miasto')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='data utworzenia')
+    created_at = models.DateTimeField(verbose_name='data utworzenia')
     total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name='kwota łączna')
     status = models.IntegerField(choices=Status.choices, default=Status.NEW)
 
